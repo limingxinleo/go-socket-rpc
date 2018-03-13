@@ -2,6 +2,8 @@ package proto
 
 import (
 	"encoding/json"
+	"fmt"
+	"reflect"
 )
 
 type RequestACK struct {
@@ -23,11 +25,13 @@ func RequestBytes(bys []byte) *RequestACK {
 	return data
 }
 
-func ResponseSuccess(data interface{}) []byte {
+func ResponseSuccess(data reflect.Value) []byte {
 	responseAck := make(map[string]interface{})
 
 	responseAck["success"] = true
-	responseAck["data"] = data
+	responseAck["data"] = data.Interface()
+
+	fmt.Println(responseAck)
 
 	r, _ := json.Marshal(responseAck)
 
