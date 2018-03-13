@@ -2,9 +2,7 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"net"
-	"encoding/json"
 	"go-socket-rpc/proto"
 	"go-socket-rpc/services"
 	"go-socket-rpc/utils"
@@ -14,33 +12,31 @@ import (
 func handle(conn *net.TCPConn) {
 
 	var remoteAddr = conn.RemoteAddr() //获取连接到的对像的IP地址。
-	fmt.Println("接受到一个连接：", remoteAddr)
+	fmt.Println("收到连接请求：", remoteAddr)
 	fmt.Println("正在读取消息...")
-	var bys, _ = ioutil.ReadAll(conn) //读取对方发来的内容。
-	fmt.Println("接收到客户端的消息：", string(bys))
-	data := new(proto.RequestACK)
-	var _ = json.Unmarshal(bys, data)
 
+	bys, _ := utils.ReadBytes(conn)
+
+	fmt.Println("接收到客户端的消息：", string(bys))
+
+	// 解析JSON数据
+	data := proto.RequestBytes(bys)
 	var service = data.Service
 	var method = utils.StrFirstToUpper(data.Method)
 	var arguments = data.Arguments
-	fmt.Println("接收到客户端的消息：", arguments)
 
 	//创建带调用方法时需要传入的参数列表
 	parms := []reflect.Value{}
 	for _, v := range arguments {
 		parms = append(parms, reflect.ValueOf(v))
 	}
-	fmt.Println("VALUE：", parms)
 
 	//使用方法名字符串调用指定方法
 	var function = services.ServiceMappers[service][method]
-	fmt.Println(method)
-
 	var result = function.Call(parms)
-	fmt.Println(result)
-	//conn.Write([]byte("hello, Nice to meet you, my name is SongXingzhu")) //尝试发送消息。
-	conn.Close()
+	fmt.Println("数据结果", result)
+
+	conn.Write(proto.ResponseSuccess(result[0]))
 }
 
 func main() {
