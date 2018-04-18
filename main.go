@@ -3,9 +3,9 @@ package main
 import (
 	"fmt"
 	"net"
-	"go-socket-rpc/proto"
-	"go-socket-rpc/services"
-	"go-socket-rpc/utils"
+	"github.com/limingxinleo/go-socket-rpc/proto"
+	"github.com/limingxinleo/go-socket-rpc/services"
+	"github.com/limingxinleo/go-socket-rpc/utils"
 	"reflect"
 )
 
