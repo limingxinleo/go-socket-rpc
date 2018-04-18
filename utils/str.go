@@ -8,7 +8,7 @@ func StrFirstToUpper(str string) string {
 
 	for _, v := range strArr {
 		item := []rune(v)
-		if (item[0] >= 97 && item[0] <= 122) {
+		if item[0] >= 97 && item[0] <= 122 {
 			item[0] -= 32
 		}
 		upperStr += string(item)
