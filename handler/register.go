@@ -1,9 +1,8 @@
-package services
+package handler
 
 import (
 	"reflect"
 	"fmt"
-	"github.com/limingxinleo/go-socket-rpc/services/test"
 )
 
 //定义控制器函数Map类型，便于后续快捷使用
@@ -11,7 +10,7 @@ type ServiceMappersType map[string]map[string]reflect.Value
 
 var ServiceMappers = make(ServiceMappersType, 0)
 
-func registerService(name string, service ServiceInterface) {
+func RegisterService(name string, service ServiceInterface) {
 
 	vf := reflect.ValueOf(service)
 	vft := vf.Type()
@@ -29,8 +28,4 @@ func registerService(name string, service ServiceInterface) {
 		}
 		serviceByName[mName] = vf.Method(i)
 	}
-}
-
-func Init() {
-	registerService("test", &test.Test{})
 }

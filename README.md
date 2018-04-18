@@ -1,3 +1,13 @@
+# GoRPC
+
+
+## 安装
+~~~
+go get github.com/limingxinleo/gorpc
+~~~
+
+## 使用
+~~~go
 package main
 
 import (
@@ -10,3 +20,4 @@ func main() {
 	rpc.RegisterHandler("test", &handlers.Test{})
 	rpc.Run()
 }
+~~~

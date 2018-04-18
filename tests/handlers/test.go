@@ -1,4 +1,4 @@
-package test
+package handlers
 
 type Test struct {
 }

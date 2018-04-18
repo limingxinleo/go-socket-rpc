@@ -1,4 +1,4 @@
-package services
+package handler
 
 type ServiceInterface interface {
 }
