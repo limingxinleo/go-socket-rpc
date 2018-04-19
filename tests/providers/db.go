@@ -7,7 +7,7 @@ type Mysql struct {
 }
 
 func (mysql *Mysql) Register() {
-	db, _ := gorm.Open("mysql", "root@/phalcon?charset=utf8&parseTime=True&loc=Local")
+	db, _ := gorm.Open("mysql", "root@127.0.0.1:3306/phalcon?charset=utf8&parseTime=True&loc=Local")
 
 	mysql.DB = db
 }
